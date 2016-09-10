@@ -1,4 +1,4 @@
-function [ gini_idx, info_gain, gain_ratio ] = SplitMetrics( class_counts, records )
+function [ gini_idx, info_gain, gain_ratio ] = SplitMetrics( class_counts )
 %SplitMetrics Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,10 +12,10 @@ function [ gini_idx, info_gain, gain_ratio ] = SplitMetrics( class_counts, recor
         for branch = [1 2]
             gini = 0;
             for class = 1:number_of_classes
-                gini = gini + (class_counts(split, branch, class)/counts(split, branch))^2;
+                gini = class_counts(split, branch, class)^2;
             end
             gini = 1-gini;
-            gini_idx(split) = gini_idx(split) + gini * counts(split, branch) / records;
+            gini_idx(split) 
         end
     end
     

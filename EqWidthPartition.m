@@ -1,12 +1,11 @@
-function [ sorted_matrix, bounds, counts, class_counts ] = EqWidthPartition( matrix, n, col, class_col )
+function [ sorted_matrix, bounds, class_counts ] = EqWidthPartition( matrix, n, col, class_col )
 %EqWidthPartition - split matrix into cell partitions
 %   `matrix` is sorted by data in column `col` and then split into
 %      `n` equal width partitions. `class_col` is the index of the column
 %       in `matrix` which contains class labels
 %    Return value is
+%      `sorted_matrix`, the data matrix, `matrix`, sorted by column `col`
 %      `bounds`, an array with the `n-1` splits for the `n` partitions
-%      `counts`, the number of elements *before* the split (each split
-%           on its own row)
 %      `class_counts`, like counts, but per class (each slice in the third
 %           dimension is like `counts`, but only for a certain class)
 
@@ -37,8 +36,6 @@ function [ sorted_matrix, bounds, counts, class_counts ] = EqWidthPartition( mat
             class_counts(k,2,c) = sum(attrs > bounds(k) & classes == class);
         end
     end
-    
-    counts = sum(class_counts(:,:,:), 3);
     
 
 end
