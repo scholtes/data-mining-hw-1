@@ -1,4 +1,4 @@
-function [ sorted_matrix, bounds, class_counts ] = EqWidthPartition( matrix, n, col, class_col )
+function [ sorted_matrix, bounds, class_counts ] = EqFreqPartition( matrix, n, col, class_col )
 %EqWidthPartition - split matrix into cell partitions
 %   `matrix` is sorted by data in column `col` and then split into
 %      `n` equal width partitions. `class_col` is the index of the column
@@ -17,8 +17,10 @@ function [ sorted_matrix, bounds, class_counts ] = EqWidthPartition( matrix, n, 
     lower_bound = min(attrs);
     upper_bound = max(attrs);
     
-    bounds = linspace(lower_bound, upper_bound, n+1);
-    bounds = bounds(2:end-1)'; % trim min and max - they are not splits
+    num_entries = size(matrix,1);
+    bounds = linspace(1, num_entries+1, n+1);
+    bounds = round(bounds(2:end-1)); % trim end and front index
+    bounds = attrs(bounds); % Use values, not indexes for below logic
     
     %counts = zeros(n-1,2);
     %entries = size(attrs, 1);
@@ -37,7 +39,9 @@ function [ sorted_matrix, bounds, class_counts ] = EqWidthPartition( matrix, n, 
         end
     end
     
-    bounds = [lower_bound; bounds; upper_bound];    
+    bounds = [lower_bound; bounds; upper_bound];     
 
 end
+
+
 
