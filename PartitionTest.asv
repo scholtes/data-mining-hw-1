@@ -1,0 +1,7 @@
+% Hw1, #1-4
+% Garrett Scholtes
+% Compute answers for these problems
+
+clear all;
+
+data = xlsread('glassdataB.xls');
