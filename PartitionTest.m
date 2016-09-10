@@ -13,4 +13,4 @@ data = xlsread('glassdataB.xls');
 
 % Problem #2
 % Each variable is an array containing the indexes for each of the splits
-[gini_idx, info_gain, gain_ratio] = SplitMetrics(class_counts, size(data,1));
+[gini_idx, info_gain, gain_ratio] = SplitMetrics(class_counts, size(data,1), sorted_data);
