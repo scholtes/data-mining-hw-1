@@ -69,3 +69,15 @@ fprintf('\nLeft question - left answer:\n%d entries\nPurity: %0.4f\n', size(left
 fprintf('\nLeft question - right answer:\n%d entries\nPurity: %0.4f\n', size(right_data1a,1), purity_r1a);
 fprintf('\nRight question - left answer:\n%d entries\nPurity: %0.4f\n', size(left_data1b,1), purity_l1b);
 fprintf('\nRight question - right answer:\n%d entries\nPurity: %0.4f\n', size(right_data1b,1), purity_r1b);
+
+% ------ % 
+
+close all;
+scatter3(left_data1a(:,2), left_data1a(:,3), left_data1a(:,4));
+hold on;
+rotate3d on;
+scatter3(right_data1a(:,2), right_data1a(:,3), right_data1a(:,4));
+scatter3(left_data1b(:,2), left_data1b(:,3), left_data1b(:,4));
+scatter3(right_data1b(:,2), right_data1b(:,3), right_data1b(:,4));
+axis off;
+
