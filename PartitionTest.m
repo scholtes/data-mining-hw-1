@@ -32,3 +32,10 @@ data = xlsread('glassdataB.xls');
 % Now build the child nodes from the resultant parent
 [split1a, column1a, gini1a, left_data1a, right_data1a] = BuildTree( left_data1, 4, 2:4 );
 [split1b, column1b, gini1b, left_data1b, right_data1b] = BuildTree( right_data1, 4, 2:4 );
+
+% Problem #6
+% Compute the purity for each child node in the above decision tree
+[purity_l1a, class_l1a] = Purity(left_data1a, 11);
+[purity_l1b, class_l1b] = Purity(left_data1b, 11);
+[purity_r1a, class_r1a] = Purity(right_data1a, 11);
+[purity_r1b, class_r1b] = Purity(right_data1b, 11);

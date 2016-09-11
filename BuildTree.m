@@ -32,7 +32,7 @@ function [ threshold, column, gini, left_data, right_data ] = BuildTree( matrix,
             end
     end
     left_predicate = sorted_by_best(:,column) <= threshold;
-    right_predicate = ones(size(left_predicate),1) - left_predicate;
+    right_predicate = ones(size(left_predicate,1),1) - left_predicate;
     
     left_data = sorted_by_best(logical(left_predicate),:);
     right_data = sorted_by_best(logical(right_predicate),:);
