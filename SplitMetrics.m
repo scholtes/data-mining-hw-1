@@ -1,4 +1,4 @@
-function [ gini_idx, info_gain, gain_ratio ] = SplitMetrics( class_counts, records, data )
+function [ gini_idx, info_gain, gain_ratio ] = SplitMetrics( class_counts, records )
 %SplitMetrics 
 %   Given `class_counts` that come from `EqWidthPartition()` and the number
 %   of records `records` from the dataset, compute these indexes for
