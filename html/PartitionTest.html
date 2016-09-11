@@ -1,0 +1,319 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>PartitionTest</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-09-10"><meta name="DC.source" content="PartitionTest.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Hw1, #1-4</span>
+<span class="comment">% Garrett Scholtes</span>
+<span class="comment">% Compute answers for these problems</span>
+
+clear <span class="string">all</span>;
+clc;
+
+data = xlsread(<span class="string">'glassdataB.xls'</span>);
+
+<span class="comment">% Problem #1</span>
+<span class="comment">% `bounds` tells you the interval boundaries</span>
+<span class="comment">% `counts` tells you how many data are in each interval</span>
+[sorted_data, bounds_width, class_counts] = EqWidthPartition(data, 4, 4, 11);
+fprintf(<span class="string">'Problem 1:'</span>);
+display(bounds_width);
+
+<span class="comment">% Problem #2</span>
+<span class="comment">% Each variable is an array containing the indexes for each of the splits</span>
+[gini_idx, info_gain, gain_ratio] = SplitMetrics(class_counts, size(data,1));
+fprintf(<span class="string">'\n\nProblem 2:'</span>);
+display(gini_idx);
+display(info_gain);
+display(gain_ratio);
+
+<span class="comment">% Problem #3</span>
+<span class="comment">% Like the above problem #1, each variable is an array containing the</span>
+<span class="comment">% indexes for each of the splits (but this time, equal frequency not width)</span>
+[sorted_data, bounds_freq, class_counts_freq] = EqFreqPartition(data, 4, 4, 11);
+fprintf(<span class="string">'\n\nProblem 3:'</span>);
+display(bounds_freq);
+
+<span class="comment">% Problem #4</span>
+<span class="comment">% Each variable is an array containing the indexes for each of the splits</span>
+[gini_idx_freq, info_gain_freq, gain_ratio_freq] = SplitMetrics(class_counts_freq, size(data,1));
+fprintf(<span class="string">'\n\nProblem 4:'</span>);
+display(gini_idx_freq);
+display(info_gain_freq);
+display(gain_ratio_freq);
+
+<span class="comment">% Problem #5</span>
+<span class="comment">% Perform equal width partitioning for each of the first 3 attributes.</span>
+<span class="comment">% Use the gini index in order to choose the best splits to form a</span>
+<span class="comment">% complete decision tree with depth 2</span>
+[split1, column1, gini1, left_data1, right_data1] = BuildTree( data, 4, 2:4 );
+<span class="comment">% Now build the child nodes from the resultant parent</span>
+[split1a, column1a, gini1a, left_data1a, right_data1a] = BuildTree( left_data1, 4, 2:4 );
+[split1b, column1b, gini1b, left_data1b, right_data1b] = BuildTree( right_data1, 4, 2:4 );
+
+<span class="comment">% Problem #6</span>
+<span class="comment">% Compute the purity for each child node in the above decision tree</span>
+[purity_l1a, class_l1a] = Purity(left_data1a, 11);
+[purity_l1b, class_l1b] = Purity(left_data1b, 11);
+[purity_r1a, class_r1a] = Purity(right_data1a, 11);
+[purity_r1b, class_r1b] = Purity(right_data1b, 11);
+
+<span class="comment">% ------ %</span>
+
+fprintf(<span class="string">'\n\nProblems 5 and 6:\n'</span>);
+fprintf(<span class="string">'\nRoot question:\nAttribute %d &lt; %0.4f ?\n[GINI = %0.4f]\n'</span>, column1-1, split1, gini1);
+fprintf(<span class="string">'\nLeft question:\nAttribute %d &lt; %0.4f ?\n[GINI = %0.4f]\n'</span>, column1a-1, split1a, gini1a);
+fprintf(<span class="string">'\nRight question:\nAttribute %d &lt; %0.4f ?\n[GINI = %0.4f]\n'</span>, column1b-1, split1b, gini1b);
+
+fprintf(<span class="string">'\nRoot state ----------------:\n%d entries\n'</span>, size(data, 1));
+
+fprintf(<span class="string">'\nRoot question - left answer:\n%d entries\n'</span>, size(left_data1,1));
+fprintf(<span class="string">'\nRoot question - right answer:\n%d entries\n'</span>, size(right_data1,1));
+
+fprintf(<span class="string">'\nLeft question - left answer:\n%d entries\nPurity: %0.4f\n'</span>, size(left_data1a,1), purity_l1a);
+fprintf(<span class="string">'\nLeft question - right answer:\n%d entries\nPurity: %0.4f\n'</span>, size(right_data1a,1), purity_r1a);
+fprintf(<span class="string">'\nRight question - left answer:\n%d entries\nPurity: %0.4f\n'</span>, size(left_data1b,1), purity_l1b);
+fprintf(<span class="string">'\nRight question - right answer:\n%d entries\nPurity: %0.4f\n'</span>, size(right_data1b,1), purity_r1b);
+</pre><pre class="codeoutput">Problem 1:
+bounds_width =
+
+         0
+    1.1225
+    2.2450
+    3.3675
+    4.4900
+
+
+
+Problem 2:
+gini_idx =
+
+    0.6601
+    0.6402
+    0.6535
+
+
+info_gain =
+
+    0.2376
+    0.3409
+    0.3205
+
+
+gain_ratio =
+
+    0.4619
+    0.5881
+    0.4784
+
+
+
+Problem 3:
+bounds_freq =
+
+         0
+    2.1900
+    3.4800
+    3.6100
+    4.4900
+
+
+
+Problem 4:
+gini_idx_freq =
+
+    0.6457
+    0.6890
+    0.7219
+
+
+info_gain_freq =
+
+    0.3174
+    0.1971
+    0.0735
+
+
+gain_ratio_freq =
+
+    0.5569
+    0.2846
+    0.1365
+
+
+
+Problems 5 and 6:
+
+Root question:
+Attribute 3 &lt; 2.2450 ?
+[GINI = 0.6402]
+
+Left question:
+Attribute 2 &lt; 14.0550 ?
+[GINI = 0.4874]
+
+Right question:
+Attribute 1 &lt; 1.5193 ?
+[GINI = 0.5987]
+
+Root state ----------------:
+214 entries
+
+Root question - left answer:
+57 entries
+
+Root question - right answer:
+157 entries
+
+Left question - left answer:
+26 entries
+Purity: 0.4615
+
+Left question - right answer:
+31 entries
+Purity: 0.7419
+
+Right question - left answer:
+129 entries
+Purity: 0.4651
+
+Right question - right answer:
+28 entries
+Purity: 0.6429
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Hw1, #1-4
+% Garrett Scholtes
+% Compute answers for these problems
+
+clear all;
+clc;
+
+data = xlsread('glassdataB.xls');
+
+% Problem #1
+% `bounds` tells you the interval boundaries
+% `counts` tells you how many data are in each interval
+[sorted_data, bounds_width, class_counts] = EqWidthPartition(data, 4, 4, 11);
+fprintf('Problem 1:');
+display(bounds_width);
+
+% Problem #2
+% Each variable is an array containing the indexes for each of the splits
+[gini_idx, info_gain, gain_ratio] = SplitMetrics(class_counts, size(data,1));
+fprintf('\n\nProblem 2:');
+display(gini_idx);
+display(info_gain);
+display(gain_ratio);
+
+% Problem #3
+% Like the above problem #1, each variable is an array containing the 
+% indexes for each of the splits (but this time, equal frequency not width)
+[sorted_data, bounds_freq, class_counts_freq] = EqFreqPartition(data, 4, 4, 11);
+fprintf('\n\nProblem 3:');
+display(bounds_freq);
+
+% Problem #4
+% Each variable is an array containing the indexes for each of the splits
+[gini_idx_freq, info_gain_freq, gain_ratio_freq] = SplitMetrics(class_counts_freq, size(data,1));
+fprintf('\n\nProblem 4:');
+display(gini_idx_freq);
+display(info_gain_freq);
+display(gain_ratio_freq);
+
+% Problem #5
+% Perform equal width partitioning for each of the first 3 attributes.
+% Use the gini index in order to choose the best splits to form a
+% complete decision tree with depth 2
+[split1, column1, gini1, left_data1, right_data1] = BuildTree( data, 4, 2:4 );
+% Now build the child nodes from the resultant parent
+[split1a, column1a, gini1a, left_data1a, right_data1a] = BuildTree( left_data1, 4, 2:4 );
+[split1b, column1b, gini1b, left_data1b, right_data1b] = BuildTree( right_data1, 4, 2:4 );
+
+% Problem #6
+% Compute the purity for each child node in the above decision tree
+[purity_l1a, class_l1a] = Purity(left_data1a, 11);
+[purity_l1b, class_l1b] = Purity(left_data1b, 11);
+[purity_r1a, class_r1a] = Purity(right_data1a, 11);
+[purity_r1b, class_r1b] = Purity(right_data1b, 11);
+
+% REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH %
+
+fprintf('\n\nProblems 5 and 6:\n');
+fprintf('\nRoot question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1-1, split1, gini1);
+fprintf('\nLeft question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1a-1, split1a, gini1a);
+fprintf('\nRight question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1b-1, split1b, gini1b);
+
+fprintf('\nRoot state REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH:\n%d entries\n', size(data, 1));
+
+fprintf('\nRoot question - left answer:\n%d entries\n', size(left_data1,1));
+fprintf('\nRoot question - right answer:\n%d entries\n', size(right_data1,1));
+
+fprintf('\nLeft question - left answer:\n%d entries\nPurity: %0.4f\n', size(left_data1a,1), purity_l1a);
+fprintf('\nLeft question - right answer:\n%d entries\nPurity: %0.4f\n', size(right_data1a,1), purity_r1a);
+fprintf('\nRight question - left answer:\n%d entries\nPurity: %0.4f\n', size(left_data1b,1), purity_l1b);
+fprintf('\nRight question - right answer:\n%d entries\nPurity: %0.4f\n', size(right_data1b,1), purity_r1b);
+##### SOURCE END #####
+--></body></html>

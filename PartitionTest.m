@@ -60,6 +60,8 @@ fprintf('\nRoot question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1-1,
 fprintf('\nLeft question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1a-1, split1a, gini1a);
 fprintf('\nRight question:\nAttribute %d < %0.4f ?\n[GINI = %0.4f]\n', column1b-1, split1b, gini1b);
 
+fprintf('\nRoot state ----------------:\n%d entries\n', size(data, 1));
+
 fprintf('\nRoot question - left answer:\n%d entries\n', size(left_data1,1));
 fprintf('\nRoot question - right answer:\n%d entries\n', size(right_data1,1));
 
